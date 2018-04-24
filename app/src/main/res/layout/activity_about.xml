@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.zju.creaturun.ui.activity.AboutActivity">
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.design.widget.AppBarLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_feed_toolbar" />
+
+        <TextView
+            android:text="\nCreaturun\n@ZJU\n联系我们:\nwanyuan1997@zju.edu.cn\n期待您的反馈与建议"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:id="@+id/textView2" />
+    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

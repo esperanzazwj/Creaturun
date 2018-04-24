@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--colors.xml-->
+<resources>
+    <color name="style_color_primary">#FF9800</color>
+    <color name="style_color_primary_dark">#F57C00</color>
+    <color name="style_color_accent">#CDDC39</color>
+
+    <color name="fab_color_pressed">#388E3C</color>
+    <color name="fab_color_shadow">#C8E6C9</color>
+
+    <color name="btn_default_light_normal">#00000000</color>
+    <color name="btn_default_light_pressed">#40ffffff</color>
+    <color name="btn_send_normal">#CDDC39</color>
+    <color name="btn_send_pressed">#006633</color>
+    <color name="btn_default_shadow">#99000000</color>
+    <color name="btn_context_menu_normal">#ffffff</color>
+    <color name="btn_context_menu_pressed">#40000000</color>
+    <color name="btn_context_menu_text_red">#ffff0000</color>
+
+    <color name="text_like_counter">#F57C00</color>
+
+    <color name="bg_comments">#ffffff</color>
+</resources>

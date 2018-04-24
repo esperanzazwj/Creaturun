@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:id="@+id/btnRun"
+        style="@style/ContextMenuButton"
+        android:text="RUN!"
+        android:textColor="@color/btn_context_menu_text_red" />
+
+    <Button
+        android:id="@+id/btnSharePhoto"
+        style="@style/ContextMenuButton"
+        android:text="分享此作品" />
+
+    <Button
+        android:id="@+id/btnCopyShareUrl"
+        style="@style/ContextMenuButton"
+        android:text="保存到我的路线集" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        style="@style/ContextMenuButton"
+        android:text="取消" />
+
+</merge>

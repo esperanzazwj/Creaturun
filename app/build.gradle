@@ -1,0 +1,47 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.hugo'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.3"
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
+    defaultConfig {
+        applicationId "cn.zju.creaturun"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    /*
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }*/
+}
+
+dependencies {
+    compile 'com.larswerkman:HoloColorPicker:1.5'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:support-v13:24.2.1'
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.android.support:palette-v7:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:cardview-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    compile 'com.jakewharton.timber:timber:4.3.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.commonsware.cwac:camera:0.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile files('libs/AMap3DMap_4.1.2_AMapNavi_1.9.3_AMapLocation_3.1.0_20161104.jar')
+    compile files('libs/MobCommons-2016.1107.1809.jar')
+    compile files('libs/MobTools-2016.1107.1809.jar')
+}
