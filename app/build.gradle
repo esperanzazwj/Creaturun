@@ -3,7 +3,7 @@ apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '27.0.3'
     aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
