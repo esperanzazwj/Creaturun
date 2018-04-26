@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
- * Created by huyw on 2016/12/5.
+ * Created by lancha on 2016/12/5.
  */
 
 public class ConfigManager {

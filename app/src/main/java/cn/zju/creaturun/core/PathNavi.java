@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by 万方方 on 2016/12/6.
+ * Created by lancha on 2016/12/6.
  */
 
 public class PathNavi implements AMapNaviListener {

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by huyw on 2016/10/27.
+ * Created by lancha on 2016/10/27.
  */
 
 public class PathTracer implements LocationSource, AMapLocationListener, AMap.OnMapScreenShotListener {

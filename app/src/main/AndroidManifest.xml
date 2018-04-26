@@ -55,7 +55,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="ca1af1c377e14e423aecec96bbb70e86"/>
+            android:value="030d97aec5844114f902c9d0c167b5e3"/>
 
         <activity
             android:name="com.mob.tools.MobUIShell"
