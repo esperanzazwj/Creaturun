@@ -66,6 +66,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
         ConfigManager.LoadConfig();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();

@@ -63,16 +63,16 @@ public class PrePlaceActivity extends BaseDrawerActivity implements RevealBackgr
 
     @Override
     public void onMapClick(LatLng latLng) {
-        if (pathNavi!=null && canStart==true){
-            if (cur_latLngs.size()>0)
-                pathNavi.CalcWalkRoute(cur_latLngs.get(cur_latLngs.size()-1),latLng);
-            else
-                mMapView.getMap().addMarker(new MarkerOptions().
-                        position(latLng).
-                        title("Current position").
-                        snippet("DefaultMarker"));
-
+        if (pathNavi != null && canStart == true){
+            if (cur_latLngs.size() > 0) {
+                pathNavi.CalcWalkRoute(cur_latLngs.get(cur_latLngs.size() - 1), latLng);
+            }
             cur_latLngs.add(latLng);
+            mMapView.getMap().addMarker(new MarkerOptions().
+                    position(latLng).
+                    title("User_Position").
+                    snippet("DefaultMarker"));
+            //showRoutes();
         }
     }
 
@@ -100,109 +100,170 @@ public class PrePlaceActivity extends BaseDrawerActivity implements RevealBackgr
         setContentView(R.layout.activity_pre_place);
         setupRevealBackground(savedInstanceState);
 
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Bundle bundle=msg.getData();
-                if (bundle.getString("located")!=null){
-                    canStart=true;
-                    cur_latLngs.add(pathTracer.GetCurLatlngs().get(0));
+        //只有在第一次定位成功后，才可以在地图上进行绘制路线
+        if (handler == null){
+            handler = new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    Bundle bundle=msg.getData();
+                    String a = bundle.getString("locate");
+                    if (bundle.getString("locate")=="success"){
+                        if (canStart == false) {
+                            canStart = true;
+                            //加入第一个定位点
+                            cur_latLngs.add(pathTracer.GetCurLatlngs().get(0));
+                        }
+                    }
                 }
-            }
-        };
+            };
+        }
 
         mMapView=(MapView)findViewById(R.id.MapView_in_pre_place);
         mMapView.onCreate(savedInstanceState);
 
-        pathTracer=new PathTracer(mMapView,getApplicationContext(),handler);
+        //这里的设计不好，应该用一个静态类管理pathTracer与pathNavi
+        pathTracer = new PathTracer(mMapView, getApplicationContext(), handler);
         pathTracer.GetAMAP().setOnMapClickListener(this);
-        pathNavi=new PathNavi(getApplicationContext(),pathTracer.GetAMAP());
-        latLngs=new ArrayList<>();
+        pathNavi = new PathNavi(getApplicationContext(),pathTracer.GetAMAP());
+
+        //绘制的路线
+        latLngs = new ArrayList<>();
 
         initDrawButton();
     }
 
     private void initDrawButton(){
-        btn_refresh=(ImageButton)findViewById(R.id.drawrefresh);
+        btn_refresh = (ImageButton)findViewById(R.id.drawrefresh);
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LatLng latLng=latLngs.get(0).get(0);
+                //清除所有的用户点，但是保留第一个定位点
+                LatLng latLng = latLngs.get(0).get(0);
                 latLngs.clear();
-                cur_latLngs=new ArrayList<>();
+                cur_latLngs = new ArrayList<>();
                 cur_latLngs.add(latLng);
                 latLngs.add(cur_latLngs);
 
                 pathNavi.clear();
-                OldPoint=null;
-                OldPath=null;
-                pathNavi.ShowRoutes();
+                OldPoint = null;
+                OldPath = null;
+                mMapView.getMap().clear();
+                mMapView.getMap().addMarker(new MarkerOptions().
+                        position(cur_latLngs.get(0)).
+                        title("User_Position").
+                        snippet("DefaultMarker"));
             }
         });
-        btn_redo=(ImageButton)findViewById(R.id.drawredo);
+        btn_redo = (ImageButton)findViewById(R.id.drawredo);
         btn_redo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (OldPoint!=null) {
                     cur_latLngs.add(OldPoint);
-                    OldPoint=null;
+                    OldPoint = null;
                     if (cur_latLngs.size() > 1) {
                         pathNavi.naviLatLngs.add(OldPath);
-                        OldPath=null;
+                        OldPath = null;
                     }
                 }
-                pathNavi.ShowRoutes();
+                showRoutes();
             }
         });
-        btn_undo=(ImageButton)findViewById(R.id.drawundo);
+        btn_undo = (ImageButton)findViewById(R.id.drawundo);
         btn_undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cur_latLngs.size()>0){
-                    if (cur_latLngs.size()>1) {
+                if (cur_latLngs.size() > 0){
+                    if (cur_latLngs.size() > 1) {
                         OldPath = pathNavi.naviLatLngs.get(pathNavi.naviLatLngs.size() - 1);
                         pathNavi.naviLatLngs.remove(pathNavi.naviLatLngs.size() - 1);
+                        OldPoint = cur_latLngs.get(cur_latLngs.size()-1);
+                        cur_latLngs.remove(cur_latLngs.size()-1);
                     }
-                    OldPoint = cur_latLngs.get(cur_latLngs.size()-1);
-                    cur_latLngs.remove(cur_latLngs.size()-1);
+                    else {
+                        if (latLngs.size() > 1){
+                            OldPoint = cur_latLngs.get(cur_latLngs.size()-1);
+                            cur_latLngs.remove(cur_latLngs.size()-1);
+                        }
+                    }
+
                 }
-                pathNavi.ShowRoutes();
+                showRoutes();
             }
         });
-        btn_newplace=(ImageButton)findViewById(R.id.drawnewplace);
+        btn_newplace = (ImageButton)findViewById(R.id.drawnewplace);
         btn_newplace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cur_latLngs=new ArrayList<>();
-                latLngs.add(cur_latLngs);
+                if (latLngs.size()>1){
+                    if (cur_latLngs.size() < 2) {
+                        cur_latLngs.clear();
+                    }
+                    else {
+                        cur_latLngs = new ArrayList<>();
+                        latLngs.add(cur_latLngs);
+                    }
+                }
+                else {
+                    if (cur_latLngs.size() >= 2) {
+                        cur_latLngs = new ArrayList<>();
+                        latLngs.add(cur_latLngs);
+                    }
+                }
                 OldPoint=null;
                 OldPath=null;
-                pathNavi.ShowRoutes();
+                showRoutes();
             }
         });
     }
+
+    void showRoutes() {
+        mMapView.getMap().clear();
+        for(int i = 0; i < latLngs.size(); i++){
+            List<LatLng> tlatLngs = latLngs.get(i);
+            for (int j = 0;j < tlatLngs.size(); j++){
+                mMapView.getMap().addMarker(new MarkerOptions().
+                        position(tlatLngs.get(j)).
+                        title("User_Position").
+                        snippet("DefaultMarker"));
+            }
+        }
+        pathNavi.ShowRoutes();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         mMapView.onResume();
 
+        super.onStart();
         latLngs.clear();
-        cur_latLngs=new ArrayList<>();
+        cur_latLngs = new ArrayList<>();
         latLngs.add(cur_latLngs);
 
-        canStart=false;
-        if (pathNavi!=null)
+        //canStart = false;
+        if (pathNavi!=null) {
             pathNavi.naviLatLngs.clear();
+        }
         pathTracer.StartTracingOnce();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        canStart = false;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        latLngs.clear();canStart=false;
-        if (pathNavi!=null)
+        latLngs.clear();
+        canStart = false;
+
+        if (pathNavi!=null) {
             pathNavi.naviLatLngs.clear();
+        }
         mMapView.onDestroy();
     }
 

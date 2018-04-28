@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lancha on 2016/12/6.
+ * Created by 万方方 on 2016/12/6.
  */
 
 public class PathNavi implements AMapNaviListener {
@@ -38,11 +38,13 @@ public class PathNavi implements AMapNaviListener {
     public List<List<LatLng>> naviLatLngs=null;
 
     public void ShowRoutes(){
-        aMap.clear();
-        for (int i=0;i<naviLatLngs.size();i++){
-            aMap.addPolyline(new PolylineOptions().
-                    addAll(naviLatLngs.get(i)).width(ConfigManager.GetWidth()).color(ConfigManager.GetColor()));
+        for (int i=0;i < naviLatLngs.size();i++){
+            aMap.addPolyline(new PolylineOptions(). addAll(naviLatLngs.get(i)).width(ConfigManager.GetWidth()).color(ConfigManager.GetColor()));
         }
+    }
+
+    public void ShowRoutesLast(){
+        aMap.addPolyline(new PolylineOptions(). addAll(naviLatLngs.get(naviLatLngs.size() - 1)).width(ConfigManager.GetWidth()).color(ConfigManager.GetColor()));
     }
 
     @Override
@@ -100,7 +102,7 @@ public class PathNavi implements AMapNaviListener {
 
         AMapNaviPath path = mAMapNavi.getNaviPath();
         List<NaviLatLng> naviLatLngs_t=path.getCoordList();
-        Toast.makeText(context, Integer.toString(naviLatLngs_t.size()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, Integer.toString(naviLatLngs_t.size()), Toast.LENGTH_SHORT).show();
 
         List<LatLng> tNaviLatLngs=new ArrayList<>();
         for (int i=0;i<naviLatLngs_t.size();i++){
@@ -110,7 +112,8 @@ public class PathNavi implements AMapNaviListener {
 
         naviLatLngs.add(tNaviLatLngs);
 
-        ShowRoutes();
+       // ShowRoutes();
+        ShowRoutesLast();
     }
 
     @Override
@@ -211,7 +214,7 @@ public class PathNavi implements AMapNaviListener {
         context = context_;aMap=aMap_;
         mAMapNavi = AMapNavi.getInstance(context);
         mAMapNavi.addAMapNaviListener(this);
-        naviLatLngs=new ArrayList<>();
+        naviLatLngs = new ArrayList<>();
     }
 
     public void Release(){

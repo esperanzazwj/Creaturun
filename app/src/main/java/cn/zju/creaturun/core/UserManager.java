@@ -1,7 +1,7 @@
 package cn.zju.creaturun.core;
 
 /**
- * Created by lancha on 2016/11/29.
+ * Created by huyw on 2016/11/29.
  */
 
 public class UserManager {

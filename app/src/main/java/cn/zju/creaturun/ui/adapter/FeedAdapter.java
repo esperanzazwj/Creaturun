@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextSwitcher;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -146,7 +145,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             feedItems.add(new FeedItem(i, false, pictures.get(i)));
         }
 
-        /*feedItems.addAll(Arrays.asList(
+      /*  feedItems.addAll(Arrays.asList(
                 new FeedItem(33, false),
                 new FeedItem(1, false),
                 new FeedItem(223, false),
