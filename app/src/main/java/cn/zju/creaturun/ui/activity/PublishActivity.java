@@ -156,6 +156,7 @@ public class PublishActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelable(ARG_TAKEN_PHOTO_URI, photoUri);
     }
+    //分享战果！
     @OnClick(R.id.button3)
     public void onShareClick(){
         showShare();

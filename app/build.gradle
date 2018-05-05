@@ -45,3 +45,18 @@ dependencies {
     compile files('libs/MobCommons-2016.1107.1809.jar')
     compile files('libs/MobTools-2016.1107.1809.jar')
 }
+
+//ShareSDK
+buildscript {
+    // 添加MobSDK的maven地址
+    repositories {
+        maven {
+            url "http://mvn.mob.com/android"
+        }
+    }
+
+    dependencies {
+        // 注册MobSDK
+        classpath "com.mob.sdk:MobSDK:+"
+    }
+}
